@@ -160,25 +160,16 @@ onClick={() => props.evil ? increasePoints() : decreasePoints()}
 ## Installation & Running the Game
 
 1. Clone the repository:
-   ```sh
-   git clone https://github.com/yourusername/snowstorm-game.git
-   cd snowstorm-game
-   ```
 2. Install dependencies:
    ```sh
-   npm install
+   npm install && npm run dev
    ```
-3. Run the development server:
-   ```sh
-   npm start
-   ```
-4. Open your browser and navigate to `http://localhost:3000` to play.
 
 ---
 
 ## Contributions
 
-Contributions are welcome! Feel free to submit a pull request or open an issue.
+Contributions are welcome! Feel free to submit a pull request from your fork, or open an issue.
 
 ---
 
