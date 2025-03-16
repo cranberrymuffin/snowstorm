@@ -42,12 +42,14 @@ function Snowman(props) {
     <group
       ref={groupRef}
       onClick={event => {
-        groupRef.current.visible = false;
-        event.stopPropagation();
-        if (props.evil) {
-          increasePoints();
-        } else {
-          decreasePoints();
+        if (groupRef.current.visible) {
+          if (props.evil) {
+            increasePoints();
+          } else {
+            decreasePoints();
+          }
+          groupRef.current.visible = false;
+          event.stopPropagation();
         }
       }}
       scale={[0.25, 0.25, 0.25]}
