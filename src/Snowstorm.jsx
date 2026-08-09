@@ -12,15 +12,27 @@ export const usePointsStore = create(set => ({
 function Points() {
   const points = usePointsStore(state => state.points);
 
-  return <div id="snowstorm-info">Points: {points}</div>;
+  return <div id="snowstorm-points">Points: {points}</div>;
 }
 
 export default function Snowstorm() {
   return (
     <div>
-      <div id="snowstorm-info">
-        Winter Assignment: Destroy all evil (red team) snowmen. Destroying good
-        (green team) snowmen results in lost points.
+      <div id="snowstorm-banner" aria-label="Winter assignment">
+        <div className="snowstorm-banner-track">
+          <span>
+            Winter Assignment: Destroy all{' '}
+            <span className="team-red">evil</span> snowmen. Destroying{' '}
+            <span className="team-green">good</span> snowmen results in lost
+            points.
+          </span>
+          <span aria-hidden="true">
+            Winter Assignment: Destroy all{' '}
+            <span className="team-red">evil</span> snowmen. Destroying{' '}
+            <span className="team-green">good</span> snowmen results in lost
+            points.
+          </span>
+        </div>
       </div>
       <Points />
       <div id="snowstorm">
