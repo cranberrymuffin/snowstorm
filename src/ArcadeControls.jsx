@@ -3,14 +3,18 @@ import { PLAYER_1, STATUS } from '@rcade/plugin-input-classic';
 import { useEffect, useRef } from 'react';
 import { Vector2 } from 'three';
 
-export default function ArcadeControls({ aimRef }) {
+export default function ArcadeControls({
+  aimRef,
+  isArcade,
+  onArcadeConnected,
+}) {
   const { camera, raycaster, scene } = useThree();
   const aim = useRef(new Vector2());
   const wasFiring = useRef(false);
-  const isBrowser = window.parent === window;
+  const arcadeConnected = useRef(false);
 
   useEffect(() => {
-    if (!isBrowser) return undefined;
+    if (isArcade) return undefined;
 
     const trackPointer = event => {
       aim.current.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -19,12 +23,17 @@ export default function ArcadeControls({ aimRef }) {
 
     window.addEventListener('pointermove', trackPointer);
     return () => window.removeEventListener('pointermove', trackPointer);
-  }, [isBrowser]);
+  }, [isArcade]);
 
   useFrame((_, delta) => {
+    if (STATUS.connected && !arcadeConnected.current) {
+      arcadeConnected.current = true;
+      onArcadeConnected(true);
+    }
+
     const step = delta * 1.2;
     const dpad = PLAYER_1.DPAD;
-    if (!isBrowser) {
+    if (isArcade) {
       aim.current.x = Math.max(
         -1,
         Math.min(1, aim.current.x + (dpad.right - dpad.left) * step),
@@ -37,7 +46,7 @@ export default function ArcadeControls({ aimRef }) {
 
     if (aimRef.current) {
       aimRef.current.style.display =
-        isBrowser || STATUS.connected ? 'block' : 'none';
+        !isArcade || STATUS.connected ? 'block' : 'none';
       aimRef.current.style.left = `${((aim.current.x + 1) / 2) * 100}%`;
       aimRef.current.style.top = `${((1 - aim.current.y) / 2) * 100}%`;
     }

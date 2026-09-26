@@ -13,18 +13,17 @@ export const usePointsStore = create(set => ({
   decreasePoints: () => set(state => ({ points: state.points - 1 })),
 }));
 
-function Points() {
+function Points({ isArcade }) {
   const points = usePointsStore(state => state.points);
   const audioRef = useRef(null);
-  const isBrowser = window.parent === window;
-  const [muted, setMuted] = useState(isBrowser);
+  const [muted, setMuted] = useState(true);
 
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return undefined;
 
     audio.volume = 0.35;
-    audio.muted = muted;
+    audio.muted = isArcade ? false : muted;
 
     const unlockPlayback = () => {
       if (audio.muted) return;
@@ -41,7 +40,7 @@ function Points() {
 
     const removeArcadeInputListener = onArcadeInput('press', unlockPlayback);
 
-    unlockPlayback();
+    if (isArcade) unlockPlayback();
     window.addEventListener('pointerdown', unlockPlayback);
     window.addEventListener('keydown', unlockPlayback);
 
@@ -51,7 +50,7 @@ function Points() {
       removeArcadeInputListener();
       audio.pause();
     };
-  }, []);
+  }, [isArcade]);
 
   const toggleMuted = event => {
     event.preventDefault();
@@ -68,7 +67,7 @@ function Points() {
   return (
     <div id="snowstorm-points">
       <span>Points: {points}</span>
-      {isBrowser && (
+      {!isArcade && (
         <button
           type="button"
           className="snowstorm-audio-toggle"
@@ -92,6 +91,7 @@ function Points() {
 
 export default function Snowstorm() {
   const aimRef = useRef(null);
+  const [isArcade, setIsArcade] = useState(false);
 
   return (
     <div>
@@ -111,12 +111,16 @@ export default function Snowstorm() {
           </span>
         </div>
       </div>
-      <Points />
+      <Points isArcade={isArcade} />
       <div id="snowstorm">
         <Canvas>
           <color attach="background" args={['black']} />
           <Experience />
-          <ArcadeControls aimRef={aimRef} />
+          <ArcadeControls
+            aimRef={aimRef}
+            isArcade={isArcade}
+            onArcadeConnected={setIsArcade}
+          />
         </Canvas>
       </div>
       <div ref={aimRef} className="snowstorm-aim" aria-hidden="true" />
