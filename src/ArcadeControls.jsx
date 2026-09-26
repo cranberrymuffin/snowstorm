@@ -25,19 +25,29 @@ export default function ArcadeControls({ aimRef }) {
     const step = delta * 1.2;
     const dpad = PLAYER_1.DPAD;
     if (!isBrowser) {
-      aim.current.x = Math.max(-1, Math.min(1, aim.current.x + (dpad.right - dpad.left) * step));
-      aim.current.y = Math.max(-1, Math.min(1, aim.current.y + (dpad.up - dpad.down) * step));
+      aim.current.x = Math.max(
+        -1,
+        Math.min(1, aim.current.x + (dpad.right - dpad.left) * step),
+      );
+      aim.current.y = Math.max(
+        -1,
+        Math.min(1, aim.current.y + (dpad.up - dpad.down) * step),
+      );
     }
 
     if (aimRef.current) {
-      aimRef.current.style.display = isBrowser || STATUS.connected ? 'block' : 'none';
+      aimRef.current.style.display =
+        isBrowser || STATUS.connected ? 'block' : 'none';
       aimRef.current.style.left = `${((aim.current.x + 1) / 2) * 100}%`;
       aimRef.current.style.top = `${((1 - aim.current.y) / 2) * 100}%`;
     }
 
     raycaster.setFromCamera(aim.current, camera);
     if (PLAYER_1.A && !wasFiring.current) {
-      for (const intersection of raycaster.intersectObjects(scene.children, true)) {
+      for (const intersection of raycaster.intersectObjects(
+        scene.children,
+        true,
+      )) {
         let target = intersection.object;
         while (target && typeof target.userData.onHit !== 'function') {
           target = target.parent;
