@@ -65,7 +65,10 @@ code {
   right: 1rem;
   bottom: 1rem;
   z-index: 3;
-  padding: 0.7rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.45rem 0.5rem 0.45rem 1rem;
   border: 2px solid #fff;
   border-radius: 0.35rem;
   background: #000;
@@ -76,6 +79,29 @@ code {
   text-shadow:
     0 0 2px #fff,
     0 0 5px #fff;
+}
+
+.snowstorm-audio-toggle {
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 65%);
+  border-radius: 0.25rem;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  text-shadow: none;
+  touch-action: manipulation;
+}
+
+.snowstorm-audio-toggle:hover {
+  background: rgb(255 255 255 / 15%);
+}
+
+.snowstorm-audio-toggle:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
 }
 
 .snowstorm-aim {

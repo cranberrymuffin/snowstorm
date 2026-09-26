@@ -1,8 +1,12 @@
-# Snowstorm: A Wintertime Web Game
+# Snowstorm: A Wintertime Arcade Game
 
 ## Overview
 
-Snowstorm is a web-based game where players destroy evil (red team) snowmen while avoiding good (green team) snowmen. Destroying good snowmen results in lost points.
+Snowstorm is now playable on the [RCade](https://rcade.dev/) arcade cabinet. Aim through the blizzard and destroy evil (red team) snowmen while avoiding good (green team) snowmen. Destroying good snowmen results in lost points.
+
+![Snowstorm running on the RCade arcade cabinet](public/snowstorm-rcade.jpg)
+
+On the cabinet, use the joystick to aim and the A button to fire. In a desktop browser, aim with the mouse and click to fire.
 
 This README explains how the visual effects of Snowstorm were created, covering both snowfall and snowmen rendering.
 
