@@ -5,6 +5,7 @@ import { create } from 'zustand';
 import { useEffect, useRef, useState } from 'react';
 import ArcadeControls from './ArcadeControls';
 import { Volume2, VolumeX } from 'lucide-react';
+import { on as onArcadeInput } from '@rcade/plugin-input-classic';
 
 export const usePointsStore = create(set => ({
   points: 0,
@@ -15,23 +16,30 @@ export const usePointsStore = create(set => ({
 function Points() {
   const points = usePointsStore(state => state.points);
   const audioRef = useRef(null);
-  const [muted, setMuted] = useState(false);
   const isBrowser = window.parent === window;
+  const [muted, setMuted] = useState(isBrowser);
 
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return undefined;
 
     audio.volume = 0.35;
+    audio.muted = muted;
 
     const unlockPlayback = () => {
       if (audio.muted) return;
 
-      audio.play().then(() => {
-        window.removeEventListener('pointerdown', unlockPlayback);
-        window.removeEventListener('keydown', unlockPlayback);
-      }).catch(() => {});
+      audio
+        .play()
+        .then(() => {
+          window.removeEventListener('pointerdown', unlockPlayback);
+          window.removeEventListener('keydown', unlockPlayback);
+          removeArcadeInputListener();
+        })
+        .catch(() => {});
     };
+
+    const removeArcadeInputListener = onArcadeInput('press', unlockPlayback);
 
     unlockPlayback();
     window.addEventListener('pointerdown', unlockPlayback);
@@ -40,6 +48,7 @@ function Points() {
     return () => {
       window.removeEventListener('pointerdown', unlockPlayback);
       window.removeEventListener('keydown', unlockPlayback);
+      removeArcadeInputListener();
       audio.pause();
     };
   }, []);
