@@ -1,0 +1,16 @@
+{
+  "$schema": "https://rcade.dev/manifest.schema.json",
+  "name": "snowstorm",
+  "display_name": "Snowstorm",
+  "description": "Aim through a blizzard, destroy evil snowmen, and spare the good ones.",
+  "visibility": "public",
+  "authors": {
+    "display_name": "cranberrymuffin (aparna)"
+  },
+  "dependencies": [
+    {
+      "name": "@rcade/input-classic",
+      "version": "1.0.0"
+    }
+  ]
+}

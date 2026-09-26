@@ -38,19 +38,24 @@ function Snowman(props) {
     }
   });
 
+  const handleHit = () => {
+    if (!groupRef.current?.visible) return;
+
+    if (props.evil) {
+      increasePoints();
+    } else {
+      decreasePoints();
+    }
+    groupRef.current.visible = false;
+  };
+
   return (
     <group
       ref={groupRef}
+      userData={{ onHit: handleHit }}
       onClick={event => {
-        if (groupRef.current.visible) {
-          if (props.evil) {
-            increasePoints();
-          } else {
-            decreasePoints();
-          }
-          groupRef.current.visible = false;
-          event.stopPropagation();
-        }
+        handleHit();
+        event.stopPropagation();
       }}
       scale={[0.25, 0.25, 0.25]}
       position={generateRandomSnowmanPosition(camera)}

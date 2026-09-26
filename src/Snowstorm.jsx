@@ -2,6 +2,8 @@ import Experience from './Experience';
 import { Canvas } from '@react-three/fiber';
 import './snowstorm.css';
 import { create } from 'zustand';
+import { useRef } from 'react';
+import ArcadeControls from './ArcadeControls';
 
 export const usePointsStore = create(set => ({
   points: 0,
@@ -16,6 +18,8 @@ function Points() {
 }
 
 export default function Snowstorm() {
+  const aimRef = useRef(null);
+
   return (
     <div>
       <div id="snowstorm-banner" aria-label="Winter assignment">
@@ -39,8 +43,10 @@ export default function Snowstorm() {
         <Canvas>
           <color attach="background" args={['black']} />
           <Experience />
+          <ArcadeControls aimRef={aimRef} />
         </Canvas>
       </div>
+      <div ref={aimRef} className="snowstorm-aim" aria-hidden="true" />
     </div>
   );
 }

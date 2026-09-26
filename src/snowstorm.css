@@ -1,8 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
 body {
   margin: 0;
-  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-family: 'Courier New', monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -34,7 +32,7 @@ code {
   text-shadow:
     0 0 2px #fff,
     0 0 5px #fff;
-  z-index: 1;
+  z-index: 3;
 }
 
 .snowstorm-banner-track {
@@ -66,7 +64,7 @@ code {
   position: fixed;
   right: 1rem;
   bottom: 1rem;
-  z-index: 1;
+  z-index: 3;
   padding: 0.7rem 1rem;
   border: 2px solid #fff;
   border-radius: 0.35rem;
@@ -78,6 +76,44 @@ code {
   text-shadow:
     0 0 2px #fff,
     0 0 5px #fff;
+}
+
+.snowstorm-aim {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 2px #111,
+    0 0 0.6rem rgb(255 255 255 / 75%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.snowstorm-aim::before,
+.snowstorm-aim::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  content: '';
+  background: #fff;
+  box-shadow: 0 0 0 1px #111;
+  transform: translate(-50%, -50%);
+}
+
+.snowstorm-aim::before {
+  width: 2.8rem;
+  height: 2px;
+}
+
+.snowstorm-aim::after {
+  width: 2px;
+  height: 2.8rem;
 }
 
 @keyframes snowstorm-banner-scroll {
