@@ -21,8 +21,13 @@ export default function ArcadeControls({
       aim.current.y = 1 - (event.clientY / window.innerHeight) * 2;
     };
 
+    // Touch taps often fire pointerdown without any pointermove.
+    window.addEventListener('pointerdown', trackPointer);
     window.addEventListener('pointermove', trackPointer);
-    return () => window.removeEventListener('pointermove', trackPointer);
+    return () => {
+      window.removeEventListener('pointerdown', trackPointer);
+      window.removeEventListener('pointermove', trackPointer);
+    };
   }, [isArcade]);
 
   useFrame((_, delta) => {
